@@ -1,0 +1,138 @@
+<head>
+  <title>nutrition.ps</title>
+</head>
+
+<body>
+
+{{> navbar}}
+{{> filter}}
+{{> grid}}
+
+</body>
+
+<template name="navbar">
+    <nav id="topbar" class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">nutrition.ps</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input id="search" type="text" class="form-control" placeholder="Search">
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            <iframe src="https://ghbtns.com/github-btn.html?user=ramijarrar&type=follow&count=false&size=large"
+                    frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contribute</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</template>
+
+<template name="filter">
+    <nav id="filter" class="navbar">
+        <ul class="nav nav-center">
+            <li role="presentation" class="{{isFilter '*'}}" data-filter="*"><a href="#">All </a></li>
+            <li role="presentation" class="{{isFilter '.main-dish'}}"
+                data-filter=".main-dish"><a href="#">Main Dish</a></li>
+            <li role="presentation" class="{{isFilter '.dessert'}}" data-filter=".dessert"><a href="#">Dessert</a></li>
+            <li role="presentation" class="{{isFilter '.pastry'}}" data-filter=".pastry"><a href="#">Pastry</a></li>
+            <li role="presentation" class="{{isFilter '.chicken'}}" data-filter=".chicken"><a href="#">Chicken</a></li>
+            <li role="presentation" class="{{isFilter '.meat'}}" data-filter=".meat"><a href="#">Meat</a></li>
+            <li role="presentation" class="{{isFilter '.mahashy'}}"
+                data-filter=".mahashy"><a href="#">Mahashy (Stuffed)</a></li>
+        </ul>
+    </nav>
+</template>
+
+<template name="grid">
+    <div style="text-align:center;">
+        <div class="grid">
+            {{#each items}}
+            <div class="grid-item {{categories}}" data-toggle="modal" data-target="#{{id}}">
+                <img src="{{image}}">
+                <p>{{name}}</p>
+            </div>
+            {{#if id}}
+            <div id="{{id}}" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" id="update-amounts" class="btn btn-default pull-left">Update</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">{{name}}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{> ingredients}}
+                            {{> nutrition}}
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</template>
+
+<template name="ingredients">
+    <div id="ingredients">
+        <table class="table table-condensed" id="tblGrid">
+            <thead id="tblHead">
+            <tr>
+                <th class="text-left">Ingredient</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Unit</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each ingredients}}
+            <tr><td class="text-left">{{name}}</td>
+                <td class="text-center">
+                    <input type="number" class="form-control" value="{{amount}}">
+                </td>
+                <td class="text-center">{{unit}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template name="nutrition">
+    <div id="nutrition">
+        <table class="table table-striped" id="tblGrid">
+            <thead id="tblHead">
+            <tr>
+                <th class="text-center">Protein</th>
+                <th class="text-center">Carbs.</th>
+                <th class="text-center">Total Fat</th>
+                <th class="text-center">Sat. Fat</th>
+                <th class="text-center">Calories</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td class="protein"></td>
+                <td class="carbs"></td>
+                <td class="total-fat"></td>
+                <td class="sat-fat"></td>
+                <td class="calories"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
